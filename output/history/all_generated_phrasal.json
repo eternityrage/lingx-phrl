@@ -743,7 +743,10 @@
     "log out / log off",
     "make a trip",
     "hop on",
-    "get up to"
+    "get up to",
+    "complain about",
+    "inform about",
+    "interpret as"
   ],
-  "last_updated": "2026-09-30T21:53:27.678703"
+  "last_updated": "2026-10-01T08:40:54.341574"
 }
