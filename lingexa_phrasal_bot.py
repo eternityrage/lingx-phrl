@@ -104,11 +104,11 @@ def generate_word_data(num_words: int = WORDS_PER_VIDEO) -> list:
                 context_words = list(set(random_seed + recent_100))
                 random.shuffle(context_words)
             elif len(all_used) > 100:
-                context_words = all_used[-100:]
+                context_words = list(all_used[-100:])
             else:
-                context_words = all_used
-            context_words.extend(collected)
-            used_list = ", ".join(context_words) if context_words else "(none yet)"
+                context_words = list(all_used)
+            context_words.extend([c.get("word") or str(c) for c in collected if isinstance(c, dict)])
+            used_list = ", ".join(str(w) for w in context_words if isinstance(w, str)) if context_words else "(none yet)"
             prompt = f"""Generate exactly 20 unique English phrasal verbs from the {category} domain.
 
 STRICT RULES:
@@ -181,11 +181,28 @@ Return ONLY the JSON array. Nothing else."""
                 print(f"[api] HTTP {status} indicates auth/payment issue...")
         except Exception as e:
             print(f"[api] Attempt {attempt + 1}/{max_attempts} FAILED: {type(e).__name__}: {e}")
+    if len(collected) < num_words:
+        print("[fallback] Checking curated fallback phrasal verbs bank for unused verbs...")
+        fallback_phrasals = [
+            {"word": "look forward to", "particle": "to", "part_of_speech": "phrasal verb", "definition": "to anticipate with pleasure", "example": "I look forward to our trip.", "synonyms": ["anticipate", "await"], "fun_fact": "Always followed by a noun or gerund -ing."},
+            {"word": "bring up", "particle": "up", "part_of_speech": "phrasal verb", "definition": "to mention a topic in discussion", "example": "She brought up a great point.", "synonyms": ["mention", "raise"], "fun_fact": "Separable: can say 'bring it up'."},
+            {"word": "turn down", "particle": "down", "part_of_speech": "phrasal verb", "definition": "to refuse or reject an offer", "example": "He turned down the job offer.", "synonyms": ["reject", "refuse"], "fun_fact": "Also means reducing volume or heat."},
+            {"word": "come across", "particle": "across", "part_of_speech": "phrasal verb", "definition": "to find or meet by chance", "example": "I came across an old photo.", "synonyms": ["find", "encounter"], "fun_fact": "Inseparable phrasal verb."},
+            {"word": "put off", "particle": "off", "part_of_speech": "phrasal verb", "definition": "to delay or postpone something", "example": "Never put off till tomorrow what you can do today.", "synonyms": ["postpone", "delay"], "fun_fact": "Very common in everyday conversation."}
+        ]
+        for fb in fallback_phrasals:
+            w_clean = fb["word"].lower().strip()
+            if w_clean not in used_set:
+                collected.append(fb)
+                used_set.add(w_clean)
+                print(f"  [fallback] Added unused curated verb: '{w_clean}'")
+                if len(collected) >= num_words:
+                    break
     if collected:
-        print(f"[api] WARNING: Only got {len(collected)}/{num_words} after {max_attempts} attempts, using partial set")
-        add_words_to_history([w["word"] for w in collected])
-        return collected
-    raise RuntimeError("API failed all attempts - cannot generate phrasal verbs.")
+        print(f"[api] Using {len(collected)} items")
+        add_words_to_history([w["word"] for w in collected[:num_words]])
+        return collected[:num_words]
+    raise RuntimeError("API failed all attempts and no unused fallback verbs available.")
 
 def create_background():
     from PIL import Image, ImageDraw
