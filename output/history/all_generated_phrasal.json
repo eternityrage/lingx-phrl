@@ -1198,7 +1198,10 @@
     "stay put",
     "close out",
     "roll out",
-    "board the bus"
+    "board the bus",
+    "land on",
+    "ride out",
+    "travel to"
   ],
-  "last_updated": "2026-11-03T21:08:39.892598"
+  "last_updated": "2026-11-03T22:56:16.089246"
 }
