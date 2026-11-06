@@ -1231,7 +1231,10 @@
     "plan ahead",
     "circle back",
     "make a stop",
-    "take a detour"
+    "take a detour",
+    "run late",
+    "book a ticket",
+    "switch trains"
   ],
-  "last_updated": "2026-11-05T23:17:05.659195"
+  "last_updated": "2026-11-06T09:07:45.910791"
 }
