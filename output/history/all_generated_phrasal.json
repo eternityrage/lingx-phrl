@@ -1255,7 +1255,10 @@
     "book a room",
     "catch a bus",
     "snap back",
-    "push away"
+    "push away",
+    "return home",
+    "plan a trip",
+    "push forward"
   ],
-  "last_updated": "2026-11-07T15:58:32.740847"
+  "last_updated": "2026-11-07T18:32:08.418676"
 }
