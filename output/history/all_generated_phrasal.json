@@ -1279,7 +1279,10 @@
     "fade away",
     "follow along",
     "turn left",
-    "turn right"
+    "turn right",
+    "wait around",
+    "merge onto",
+    "switch lanes"
   ],
-  "last_updated": "2026-11-09T09:29:05.128462"
+  "last_updated": "2026-11-09T15:23:49.271186"
 }
