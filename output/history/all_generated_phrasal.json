@@ -1552,7 +1552,10 @@
     "redeem voucher",
     "accept back",
     "mark out",
-    "air out"
+    "air out",
+    "scan in",
+    "pair up",
+    "go jogging"
   ],
-  "last_updated": "2026-11-27T16:17:14.004872"
+  "last_updated": "2026-11-27T19:16:45.158929"
 }
